@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function CounterFnDzUp({ max, min }) {
+function CounterFnDzUp({ max, min = 1 }) {
   let [current, setCurrent] = useState(min);
 
   function applyCurrent(num) {
     let validCurrent = Math.max(min, Math.min(max, num));
     setCurrent(validCurrent);
+  }
+
+  function parseCurrentStr(e) {
+    let num = parseInt(e.target.value);
+    applyCurrent(isNaN(num) ? min : num);
   }
 
   let inc = () => applyCurrent(current + 1);
@@ -15,7 +20,7 @@ function CounterFnDzUp({ max, min }) {
   return (
     <>
       <button type='button' onClick={dec}>-</button>
-      <input type='text' value={current} onChange={e => applyCurrent(e.target.value)} />
+      <input type='text' value={current} onChange={parseCurrentStr} />
       <button type='button' onClick={inc}>+</button>
     </>
   )
@@ -23,7 +28,7 @@ function CounterFnDzUp({ max, min }) {
 
 CounterFnDzUp.propTypes = {
   max: PropTypes.number.isRequired,
-  min: PropTypes.number.isRequired
+  min: PropTypes.number
 }
 
 export default CounterFnDzUp;
