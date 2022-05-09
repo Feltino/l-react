@@ -2,25 +2,20 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 function CounterFnDzUp({ max, min }) {
-  let [current, setCurrent] = useState(1);
+  let [current, setCurrent] = useState(min);
 
-  function inc() {
-    if (current < max) {
-      setCurrent(current + 1)
-    }
+  function applyCurrent(num) {
+    let validCurrent = Math.max(min, Math.min(max, num));
+    setCurrent(validCurrent);
   }
 
-  function dec() {
-    if (current > min) {
-      setCurrent(current - 1)
-    }
-  }
-
+  let inc = () => applyCurrent(current + 1);
+  let dec = () => applyCurrent(current - 1);
 
   return (
     <>
       <button type='button' onClick={dec}>-</button>
-      <input type='text' onChange={e => setCurrent(e.target.value)} />
+      <input type='text' value={current} onChange={e => applyCurrent(e.target.value)} />
       <button type='button' onClick={inc}>+</button>
     </>
   )

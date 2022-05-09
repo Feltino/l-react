@@ -13,4 +13,3 @@ root.render(
     <CounterFnDzUp min={1} max={10} />
   </>
 );
-
