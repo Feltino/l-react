@@ -1,12 +1,11 @@
 import React from 'react';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import MinMax from './les3/MinMax';
-import ProductCard from './les3/ProductCard';
-import useWindowSize from './les3/hooks/useWindowSize';
+import Modal from './les4/Modal';
 
 export default function () {
-  let { width } = useWindowSize();
   let [products, setProducts] = useState(productStub());
+  let [showDetails, setShowDetails] = useState(false);
 
   let total = products.reduce((sum, pr) => sum + pr.price * pr.cnt, 0);
   // let total = useMemo(() => products.reduce((sum, pr) => sum + pr.price * pr.cnt, 0), [products]);
@@ -48,12 +47,12 @@ export default function () {
       </tbody>
     </table>
     <hr />
-    <strong>Total: {total}</strong>
-    <ProductCard />
-    <hr />
-    <footer>
-      {width}
-    </footer>
+    <strong onClick={() => setShowDetails(true)}>Total: {total}</strong>
+    <Modal
+      showed={showDetails}
+      title={`${products.length} in list, please pay order`}
+      onClose={() => setShowDetails(false)}
+    />
   </div>;
 }
 
